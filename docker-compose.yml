@@ -1,0 +1,35 @@
+# Gate 1: sirf infrastructure (PostgreSQL + Mailpit). Gateway khud Python venv mein chalta hai.
+# Memory limits 6 GB RAM wale laptop ke hisab se rakhe hain.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: mailonix-postgres
+    environment:
+      POSTGRES_USER: mailonix
+      POSTGRES_PASSWORD: mailonix
+      POSTGRES_DB: mailonix
+    command: ["postgres", "-c", "shared_buffers=64MB", "-c", "max_connections=30"]
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mailonix -d mailonix"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    mem_limit: 384m
+    restart: unless-stopped
+
+  mailpit:
+    image: axllent/mailpit:v1.21
+    container_name: mailonix-mailpit
+    ports:
+      - "127.0.0.1:1025:1025"   # SMTP: delivery adapter yahan bhejta hai
+      - "127.0.0.1:8025:8025"   # Web UI: http://localhost:8025
+    mem_limit: 128m
+    restart: unless-stopped
+
+volumes:
+  pgdata:

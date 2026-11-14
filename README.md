@@ -27,7 +27,7 @@ Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 
 | Cheez | Kahan |
 | --- | --- |
-| PostgreSQL | `localhost:5432` (user/pass/db: `mailonix`) |
+| PostgreSQL | `localhost:5433` (user/pass/db: `mailonix`) |
 | Mailpit inbox (web) | http://localhost:8025 |
 | Mailpit SMTP | `localhost:1025` |
 
