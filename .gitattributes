@@ -1,0 +1,9 @@
+# Code aur config: repo mein LF, Windows checkout par git khud sambhal leta hai.
+* text=auto
+
+# .eml files ko git bilkul na chhede (line endings badalne se DKIM signature toot jata hai).
+# "diff" ki wajah se PR mein farq phir bhi text ki tarah nazar aata hai.
+*.eml -text diff
+
+# Shell scripts container ke andar chalenge, hamesha LF.
+*.sh text eol=lf

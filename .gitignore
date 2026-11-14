@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+build/
+dist/
+
+# Config jismein asli values hon (sirf .env.example commit hota hai)
+.env
+
+# Runtime data: raw emails, attachments, logs
+data/
+*.log
+
+# Editors / OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
