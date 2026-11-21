@@ -45,6 +45,28 @@ alembic revision --autogenerate -m "kya badla"    # models badalne ke baad nayi 
 alembic check                                     # models aur DB mein farq? "No new upgrade operations" = theek
 ```
 
+## Checks
+
+Har check `ParsedEmail` leta hai aur `Signal` deta hai. Saancha `src/mailonix/checks/base.py` mein, list `registry.py` mein.
+
+```powershell
+python scripts/show_checks.py              # saare checks ek namoona email par: kaun kya kehta hai
+python scripts/show_checks.py --mismatch   # Reply-To alag domain wali email par
+```
+
+**Naya check jorna (ya placeholder ko asli banana):**
+1. `src/mailonix/checks/` mein file (maslan `links.py`), class `Check` se: `name`, `group`, `default_params`, `async def run(email) -> Signal`.
+2. Signal `self.ok(value, reasons, details)`, `self.abstain(...)` ya `self.unavailable(...)` se banao. Pata na ho to `abstain`, kabhi "0 = safe" nahi.
+3. Naya check ho to `registry.py` ki `ALL_CHECKS` mein ek line.
+4. Badalne wali values code mein nahi: `config/checks.toml` mein `[check_ka_naam]` ke neeche.
+5. Test `tests/` mein, `make_email(...)` fixture se (bina parser ke email). Check kabhi database mein nahi likhta.
+
+**Check band karna** (ablation, ya toota check): `.env` mein `DISABLED_CHECKS=intent,links`. Ek dafa ke liye:
+
+```powershell
+$env:DISABLED_CHECKS="intent"; python scripts/show_checks.py; Remove-Item Env:DISABLED_CHECKS
+```
+
 ## Kya chal raha hai, kaise dekhein
 
 | Cheez | Kahan |

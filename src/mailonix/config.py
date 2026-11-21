@@ -27,6 +27,14 @@ class Settings(BaseSettings):
     data_dir: Path = Path("./data")
     lab_trust_xclient: bool = False   # default band; lab mein .env se true
 
+    # Checks
+    checks_config: Path = Path("config/checks.toml")   # har check ki values
+    disabled_checks: str = ""                           # comma se alag naam, maslan "intent,links"
+
+    @property
+    def disabled_check_names(self) -> frozenset[str]:
+        return frozenset(n.strip() for n in self.disabled_checks.split(",") if n.strip())
+
     # Adapters
     ti_mode: Literal["live", "mock", "hybrid"] = "mock"
     delivery: Literal["mailpit", "gmail"] = "mailpit"
