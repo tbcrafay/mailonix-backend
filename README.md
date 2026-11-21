@@ -14,13 +14,35 @@ python -m pip install --upgrade pip
 pip install -e ".[dev]"
 Copy-Item .env.example .env
 docker compose up -d
+alembic upgrade head
 python -m pytest -q
 ```
+
+## Roz kaam shuru karte waqt
+
+Laptop restart ke baad Docker Desktop khud nahi khulta. Pehle Docker Desktop kholo, phir:
+
+```powershell
+docker compose ps        # postgres "Up (healthy)", mailpit "Up"
+```
+
+Tests mein "PostgreSQL nahi mila" aaye to sab se pehle yahi dekho.
 
 Agar `Activate.ps1` par "running scripts is disabled" aaye, ek dafa yeh chalao, phir dobara activate:
 
 ```powershell
 Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+```
+
+## Database migrations (Alembic)
+
+Tables `src/mailonix/db/models.py` mein hain. Migration sirf ek banda banata hai (tech lead se pooch kar).
+
+```powershell
+alembic upgrade head                              # saari migrations lagao
+alembic current                                   # abhi kaun si lagi hai
+alembic revision --autogenerate -m "kya badla"    # models badalne ke baad nayi migration
+alembic check                                     # models aur DB mein farq? "No new upgrade operations" = theek
 ```
 
 ## Kya chal raha hai, kaise dekhein
