@@ -1,0 +1,16 @@
+# Har check ki badalne wali values. Code mein sirf default hai; yahan likhi value us ki jagah le leti hai.
+# Ghalat naam (check ya setting) par app shuru hote hi saaf error deti hai.
+# Check band karna ho to yahan nahi, .env mein: DISABLED_CHECKS=intent,links
+# Yeh values har scan ke config_version (fingerprint) mein shamil hoti hain.
+
+[header_auth]
+# Reply-To ka domain From se alag ho to shak (0 = koi nahi, 1 = pakka khatra)
+reply_to_mismatch_value = 0.6
+
+# Neeche wale checks abhi placeholder hain (hamesha "abstained"). Asli version aane par
+# un ki settings yahan aayengi, maslan:
+# [threat_intel]  cache_ttl_seconds, mock_list_path
+# [links]         risky_tlds, lookalike_threshold, model_path
+# [attachments]   dangerous_extensions, max_archive_depth
+# [behaviour]     min_history, off_hours_threshold
+# [intent]        model_path, decision_threshold
